@@ -13,4 +13,5 @@
 - [MySet](https://github.com/Helmoz/ABDT/blob/25/09_hw/ABDT_hw/MySet/Program.cs)
 ------------
 - [Упорядочивание задач](https://github.com/Helmoz/ABDT/tree/orderedTasks/OrderedTasks)
+- [Калькулятор в ФП стиле. С использованием монады Maybe](https://github.com/Helmoz/ABDT/tree/calculator/Calculator2/Calculator2)
  
