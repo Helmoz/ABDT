@@ -1,0 +1,22 @@
+﻿@page "/products/edit/{productId:long}"
+@using ProductsApp.Core.Entities
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+<h3>Редактировать</h3>
+<Form ButtonText="Обновить" Product="Product"
+      OnValidSubmit="@EditProduct" />
+@code {
+    [Parameter] public long productId { get; set; }
+    private ProductDto Product { get; set; } = new ProductDto();
+    protected override async Task OnParametersSetAsync()
+    {
+        Product = await http.GetFromJsonAsync<ProductDto>($"api/product/{productId}");
+    }
+    async Task EditProduct()
+    {
+        await http.PutAsJsonAsync("api/product", Product);
+        await js.InvokeVoidAsync("alert", $"Успешно обновлено!");
+        uriHelper.NavigateTo("products");
+    }
+}

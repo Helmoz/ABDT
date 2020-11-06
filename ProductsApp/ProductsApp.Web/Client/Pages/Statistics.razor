@@ -1,0 +1,45 @@
+﻿@page "/statistics"
+@using ProductsApp.Core.Entities
+@using ProductsApp.Core.Entities.Enums
+@inject HttpClient client
+<h3>Статистика</h3>
+<h4>Количество уникальных пользователей</h4>
+@foreach (var choice in new[] { StatisticType.Day, StatisticType.Month, StatisticType.Year })
+{
+   <label style="margin-right: 20px">
+       <input name="yourColor" type="radio"
+              value="@choice"
+              checked="@(StatisticType == choice)"
+              @onchange="@( async () => { StatisticType = choice; await GetData(); })" />
+       @choice.ToDisplayString()
+   </label>
+}
+@if (StatisticResponse == null)
+{
+    <text>Загрузка...</text>
+}
+else
+{
+    <div>
+        <p>Среднее: @StatisticResponse.Average.ToString("0.##")</p>
+        <p>Дисперсия: @StatisticResponse.Variance.ToString("0.##")</p>
+        <p>Медиана: @StatisticResponse.Median.ToString("0.##")</p>
+    </div>
+}
+
+@code {
+    StatisticResponse StatisticResponse { get; set; }
+
+    StatisticType StatisticType { get; set; } = StatisticType.Day;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await GetData();
+    }
+    
+    async Task GetData()
+    {
+        StatisticResponse = await client.GetFromJsonAsync<StatisticResponse>($"api/statistic?statisticType={StatisticType}");
+        StateHasChanged();
+    }
+}

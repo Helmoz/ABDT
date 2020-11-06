@@ -1,0 +1,78 @@
+﻿@page "/products"
+@using ProductsApp.Core.Entities
+@inject HttpClient client
+@inject IJSRuntime js
+@using BlazorPagination
+<h3>Products</h3>
+<div class="form-group">
+    <a class="btn btn-success" href="products/create"><i class="oi oi-plus" style="margin-right: 10px"></i>Создать</a>
+</div>
+<br>
+@if (Products == null)
+{
+    <text>Загрузка...</text>
+}
+else if (Products.Results.Length == 0)
+{
+    <text>Записей не найдено</text>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Наименование</th>
+            <th>Цена</th>
+            <th>Категория</th>
+            <th>Количество</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var product in Products.Results)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>@product.Category</td>
+                <td>@product.Quantity</td>
+                <td>
+                    <a class="btn btn-success" href="products/edit/@product.Id">Edit</a>
+                    <button class="btn btn-danger" @onclick="@(() => Delete(product.Id))">Delete</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <BlazorPager CurrentPage="@Products.CurrentPage"
+                 PageCount="@Products.PageCount"
+                 OnPageChanged="async e => { _page = e; await GetData();}"
+                 ShowFirstLast="false"
+                 ShowPageNumbers="true"
+                 VisiblePages="3" />
+}
+@code {
+    PagedResult<ProductDto> Products { get; set; }
+    private int _page = 1;
+    
+    protected override async Task OnInitializedAsync()
+    {
+         await GetData();
+    }
+    
+    async Task GetData()
+    {
+        Products = await client.GetFromJsonAsync<PagedResult<ProductDto>>($"api/product?page={_page}&pageSize=3");
+        StateHasChanged();
+    }
+    
+    async Task Delete(long productId)
+    {
+        var product = Products.Results.First(x => x.Id == productId);
+        if (await js.InvokeAsync<bool>("confirm", $"Вы действительно хотите удалить этот продукт? ({product.Name})"))
+        {
+            await client.DeleteAsync($"api/product/{productId}");
+            await OnInitializedAsync();
+        }
+    }
+}

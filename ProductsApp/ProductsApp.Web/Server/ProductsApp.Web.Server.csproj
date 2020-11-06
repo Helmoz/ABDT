@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
+    <PackageReference Include="Reinforced.Tecture.Runtimes.EFCore" Version="1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ProductsApp.Core\ProductsApp.Core.csproj" />
+    <ProjectReference Include="..\..\ProductsApp.Data\ProductsApp.Data.csproj" />
+    <ProjectReference Include="..\Client\ProductsApp.Web.Client.csproj" />
+  </ItemGroup>
+
+
+</Project>

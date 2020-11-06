@@ -1,0 +1,46 @@
+﻿@using ProductsApp.Core.Entities
+<EditForm Model="@Product" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Наименование:</label>
+        <div>
+            <InputText @bind-Value="@Product.Name" />
+            <ValidationMessage For="@(() => Product.Name)" />
+        </div>
+    </div>
+    <div class="form-group ">
+        <div>
+            <label>Цена:</label>
+            <div>
+                <InputNumber @bind-Value="@Product.Price" />
+                <ValidationMessage For="@(() => Product.Price)" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group ">
+        <div>
+            <label>Категория:</label>
+            <div>
+                <InputText @bind-Value="@Product.Category" />
+                <ValidationMessage For="@(() => Product.Category)" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group ">
+        <div>
+            <label>Количество:</label>
+            <div>
+                <InputNumber @bind-Value="@Product.Quantity" />
+                <ValidationMessage For="@(() => Product.Quantity)" />
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">
+        @ButtonText
+    </button>
+</EditForm>
+@code {
+    [Parameter] public ProductDto Product { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Сохранить";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}

@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="BlazorPagination" Version="0.2.11" />
+      <PackageReference Include="morelinq" Version="3.3.2" />
+      <PackageReference Include="Reinforced.Tecture" Version="1.0.3" />
+      <PackageReference Include="Reinforced.Tecture.Aspects.Orm" Version="1.0.3" />
+    </ItemGroup>
+
+</Project>

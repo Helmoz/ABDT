@@ -1,0 +1,16 @@
+﻿@page "/products/create"
+@using ProductsApp.Core.Entities
+@inject HttpClient http
+@inject NavigationManager uriHelper
+<h3>Создать</h3>
+<Form ButtonText="Создать" Product="Product"
+      OnValidSubmit="@CreateProduct" />
+@code {
+    private ProductDto Product { get; } = new ProductDto();
+
+    async Task CreateProduct()
+    {
+        await http.PostAsJsonAsync("api/product", Product);
+        uriHelper.NavigateTo("products");
+    }
+}
