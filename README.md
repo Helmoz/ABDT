@@ -16,3 +16,4 @@
 - [Калькулятор в ФП стиле. С использованием монады Maybe](https://github.com/Helmoz/ABDT/tree/calculator/Calculator2/Calculator2)
 ------------
 - [Перемножение матриц](https://github.com/Helmoz/ABDT/tree/matrix/Maxtrix/MatrixMultiply)
+- [ASP.NET](https://github.com/Helmoz/ABDT/tree/aspblazor/ProductsApp)
